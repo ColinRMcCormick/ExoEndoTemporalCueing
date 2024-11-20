@@ -191,72 +191,27 @@ c = subset(c, no_max==FALSE)
 c = subset(c, double_trigger!=TRUE)
 c$rt<-c$rt *1000
 
-#Reaction Time Cut Offz
+#Reaction Time Cut Off
 summary(c)
-c$rt_bin<-NA
-c$rt_bin<-as.numeric(c$rt_bin)
-c$rt_bin[c$rt < 50.0] <- "50"
-c$rt_bin[c$rt > 50.0 & c$rt< 100.0] <- "50-100"
-c$rt_bin[c$rt> 100.1 & c$rt < 150] <- "100-150"
-c$rt_bin[c$rt> 150.1 & c$rt< 200.0] <- "150-200"
-c$rt_bin[c$rt> 200.1 & c$rt< 250.0] <- "200-250"
-c$rt_bin[c$rt> 250.1 & c$rt< 300] <- "250-300"
-c$rt_bin[c$rt> 300.1 & c$rt< 350] <- "300-350"
-c$rt_bin[c$rt> 350.1 & c$rt< 400] <- "350-400"
-c$rt_bin[c$rt> 400.1 & c$rt< 450]  <- "400-450"
-c$rt_bin[c$rt> 450.1 & c$rt< 500]  <- "450-500"
-c$rt_bin[c$rt> 500.1 & c$rt< 550]  <- "500-550"
-c$rt_bin[c$rt> 550.1 & c$rt< 600]  <- "550-600"
-c$rt_bin[c$rt> 600.1 & c$rt< 650]  <- "600-650"
-c$rt_bin[c$rt> 650.1 & c$rt< 700]  <- "650-700"
-c$rt_bin[c$rt> 700.1 & c$rt< 750]  <- "700-750"
-c$rt_bin[c$rt> 750.1 & c$rt< 800]  <- "750-800"
-c$rt_bin[c$rt> 800.1 & c$rt< 850]  <- "800-850"
-c$rt_bin[c$rt> 850.1 & c$rt< 900]  <- "850-900"
-c$rt_bin[c$rt> 900.1 & c$rt< 950]  <- "900-950"
-c$rt_bin[c$rt> 950.1 & c$rt< 1000]  <- "950-1000"
-bin_er<-aggregate(error~rt_bin, data= c, mean )
-bin_er1<-aggregate(error~rt_bin, data= c, length )
-a<-merge(bin_er,bin_er1, by = "rt_bin")
-a
+# Define the bin edges and labels
+breaks <- c(-Inf, 50, 100, 150, 200, 210, 220, 230, 240, 250, 300, 350, 400, 450, 500,
+            550, 600, 650, 700, 750, 800, 810, 820, 830, 840, 850, 900, 950, 1000, Inf)
+labels <- c("50", "50-100", "100-150", "150-200", "200-210", "210-220", "220-230",
+            "230-240", "240-250", "250-300", "300-350", "350-400", "400-450",
+            "450-500", "500-550", "550-600", "600-650", "650-700", "700-750",
+            "750-800", "800-810", "810-820", "820-830", "830-840", "840-850",
+            "850-900", "900-950", "950-1000")
 
-#Revised Cut Offs (more specific)
-c$rt_bin<-NA
-c$rt_bin<-as.numeric(c$rt_bin)
-c$rt_bin[c$rt < 50.0] <- "50"
-c$rt_bin[c$rt > 50.0 & c$rt< 100.0] <- "50-100"
-c$rt_bin[c$rt> 100.1 & c$rt < 150] <- "100-150"
-c$rt_bin[c$rt> 150.1 & c$rt< 200.0] <- "150-200"
-c$rt_bin[c$rt> 200.1 & c$rt< 250.0] <- "200-250"
-c$rt_bin[c$rt> 200.1 & c$rt< 210.0] <- "200-210"
-c$rt_bin[c$rt> 210.1 & c$rt< 220.0] <- "210-220"
-c$rt_bin[c$rt> 220.1 & c$rt< 230.0] <- "220-230"
-c$rt_bin[c$rt> 230.1 & c$rt< 240.0] <- "230-240"
-c$rt_bin[c$rt> 240.1 & c$rt< 250.0] <- "240-250"
-c$rt_bin[c$rt> 250.1 & c$rt< 300] <- "250-300"
-c$rt_bin[c$rt> 300.1 & c$rt< 350] <- "300-350"
-c$rt_bin[c$rt> 350.1 & c$rt< 400] <- "350-400"
-c$rt_bin[c$rt> 400.1 & c$rt< 450]  <- "400-450"
-c$rt_bin[c$rt> 450.1 & c$rt< 500]  <- "450-500"
-c$rt_bin[c$rt> 500.1 & c$rt< 550]  <- "500-550"
-c$rt_bin[c$rt> 550.1 & c$rt< 600]  <- "550-600"
-c$rt_bin[c$rt> 600.1 & c$rt< 650]  <- "600-650"
-c$rt_bin[c$rt> 650.1 & c$rt< 700]  <- "650-700"
-c$rt_bin[c$rt> 700.1 & c$rt< 750]  <- "700-750"
-c$rt_bin[c$rt> 750.1 & c$rt< 800]  <- "750-800"
-c$rt_bin[c$rt> 800.1 & c$rt< 810]  <- "800-810"
-c$rt_bin[c$rt> 810.1 & c$rt< 820]  <- "810-820"
-c$rt_bin[c$rt> 820.1 & c$rt< 830]  <- "820-830"
-c$rt_bin[c$rt> 830.1 & c$rt< 840]  <- "830-840"
-c$rt_bin[c$rt> 840.1 & c$rt< 850]  <- "840-850"
-c$rt_bin[c$rt> 850.1 & c$rt< 900]  <- "850-900"
-c$rt_bin[c$rt> 900.1 & c$rt< 950]  <- "900-950"
-c$rt_bin[c$rt> 950.1 & c$rt< 1000]  <- "950-1000"
-bin_er<-aggregate(error~rt_bin, data= c, mean )
-bin_er1<-aggregate(error~rt_bin, data= c, length )
-a<-merge(bin_er,bin_er1, by = "rt_bin")
-a
+# Bin the data using cut()
+c$rt_bin <- cut(c$rt, breaks = breaks, labels = labels, right = FALSE)
 
+# Aggregate error by rt_bin
+bin_er <- aggregate(error ~ rt_bin, data = c, mean)
+bin_er1 <- aggregate(error ~ rt_bin, data = c, length)
+
+# Merge results
+a <- merge(bin_er, bin_er1, by = "rt_bin")
+a
 c<-subset(c, rt > 220)
 ###Too slow###
 c<-subset(c, rt < 800)
@@ -419,6 +374,7 @@ summary(LoSOAc_er)
 
 #Target check
 #Short#
+#RT
 ezStats(
   data = ShSOAc
   , wid = id
@@ -431,6 +387,8 @@ ezStats(
   , dv = .(rt)
   , within = .(target, signal)
 )
+
+#ER
 ezStats(
   data = ShSOAc_er
   , wid = id
@@ -529,7 +487,9 @@ gr_a+ theme_pubr(base_size = 14, base_family = "", border = FALSE,
 
 
 
-
+###
+#########BONUS CODE Analyses##############
+###
 
 #OTHER Error Rate#
 unrestrictM_target <- glmer( error_t ~target + (1|id), data = ShSOAc_er, REML = F, family = 'binomial' ) #influence of cue
@@ -544,21 +504,4 @@ model_interact<-glmer( error_t ~ (1|id) +cue * signal, data = ShSOAc_er, REML = 
 (AIC(restrictM)-AIC(unrestrictM_signal))*log2(exp(1))
 (AIC(restrictM_interaction)-AIC(unrestrictM_int))*log2(exp(1))
 summary(c_error
-
-
-###
-#########Alternate Analyses##############
-###
-
-#Alternate error analysis as asked for by committee
-summary(c_error)
-c_error$error_t<-0
-c_error$error_t<-as.numeric(c_error$error_t)
-c_error$error_t[c_error$error == '1'] <-1
-c_error$error_t[c_error$double_trigger== TRUE] <-1
-c_error$error_t[c_error$no_max== TRUE] <-1
-c_error$error_t[c_error$both_triggers== TRUE] <-1
-
-
-
 
